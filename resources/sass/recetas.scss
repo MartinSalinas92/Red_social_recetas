@@ -1,0 +1,19 @@
+body{
+    font-family: $parrafos-font-family;
+}
+
+.bg-primary .navbar-brand {
+
+    color:white;
+    font-style: $parrafos-font-family ;
+    font-size: 2 rem;
+
+        &:hover{
+            color: white;
+        }
+}
+
+.trix-editor{
+
+    min-height: 400px;
+}

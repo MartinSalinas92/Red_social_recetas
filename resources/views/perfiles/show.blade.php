@@ -17,7 +17,7 @@
     <div class="row">
         <div class="col-md-5"> 
 
-           <img src="/storage/{{$perfil->imagen}}" class="w-200" >
+           <img src="/storage/{{$perfil->imagen}}" class="w-100" >
 
 
 

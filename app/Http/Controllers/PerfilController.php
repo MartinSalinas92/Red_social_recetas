@@ -7,12 +7,20 @@ use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
 use App\Perfil;
+use App\Receta;
 use Illuminate\Http\Request;
 use App\User;
 
 
 class PerfilController extends Controller
+
 {
+
+    public function __construct(){
+
+        $this->middleware('auth');
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -53,6 +61,11 @@ class PerfilController extends Controller
     public function show(Perfil $perfil)
 
     {
+        //Obtener receta con paginacion 
+
+        $recetas=Receta::where('user_id',$perfil->user_id)->paginate(2);
+        
+
 
             $user_id= Auth::user()->id;
             $perfiles=DB::table('perfils')
@@ -66,7 +79,7 @@ class PerfilController extends Controller
                     ->where('user_id','=', $user_id)
                     ->get();
 
-            return view('perfiles.show',compact('perfiles'));
+            return view('perfiles.show',compact('perfiles', 'recetas'));
 
 
 
@@ -81,6 +94,11 @@ class PerfilController extends Controller
      */
     public function edit(Perfil $perfil)
     {
+
+        //Ejecutar Policy
+        $this->authorize('view',$perfil);
+
+
         $user_id= Auth::user()->id;
             $perfiles_edit=DB::table('perfils')
                     ->leftJoin('users', 'users.id' ,"=", 'perfils.user_id')
@@ -108,6 +126,9 @@ class PerfilController extends Controller
     {
      
 
+        //Ejecutar Policy
+        $this->authorize('update',$perfil);
+        
         //validar
         $perfiles=request()->validate([
          
@@ -115,12 +136,12 @@ class PerfilController extends Controller
             'editar_url'=>'required',
             'editarBiografia'=>'required',
             'imagen_perfil'=>'required'
+            
 
         ]);
 
         //return dd($perfiles['imagen_perfil']);
 
-        //$imagen=$request->all();
 
        
         if($perfiles['imagen_perfil']){
@@ -164,7 +185,7 @@ class PerfilController extends Controller
                     ]);
 
         
-            return view('perfiles.show');
+            return view('perfiles.show',compact('perfiles','perfiles_show'));
 
       
 

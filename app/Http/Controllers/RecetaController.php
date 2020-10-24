@@ -33,6 +33,8 @@ class RecetaController extends Controller
        
        $user_id= Auth::user()->id;
 
+       $recetas= Receta::where('user_id',$user_id)->paginate(2);
+
        /*$Receta=Receta::all();
 
        //dd($Receta);
@@ -62,7 +64,7 @@ class RecetaController extends Controller
                     ->where('user_id','=',$user_id)
                     ->get();
 
-        return view('recetas.index', compact('usuario'));
+        return view('recetas.index', compact('usuario','recetas'));
       
 
 
@@ -184,8 +186,14 @@ class RecetaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
+
     {
+        
+        //ejecutar policy
+       // $this->authorize('view');
         //return dd($id);
+
+
 
         $categoria=Categoria::all();
 

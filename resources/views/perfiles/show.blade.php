@@ -17,7 +17,13 @@
     <div class="row">
         <div class="col-md-5"> 
 
-           <img src="/storage/{{$perfil->imagen}}" class="w-100" >
+            
+
+            <img src="/storage/{{$perfil->imagen}}" class="w-100" >
+                
+         
+
+      
 
 
 
@@ -46,6 +52,6 @@
 </div>
         
     @endforeach
-
+{{$recetas}}
     
 @endsection
